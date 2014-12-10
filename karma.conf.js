@@ -12,7 +12,7 @@ module.exports = function (config) {
 
         reporters: ['dots'],
 
-        browsers: ['Firefox'],
+        browsers: ['PhantomJS'],
         autoWatch: true,
         singleRun: false,
 
