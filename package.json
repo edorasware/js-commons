@@ -1,0 +1,19 @@
+{
+  "name": "js-commons",
+  "version": "0.0.0",
+  "description": "Reusable JS abstractions",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/karma/bin/karma"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/almilo/js-commons.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/almilo/js-commons/issues"
+  },
+  "homepage": "https://github.com/almilo/js-commons"
+}
+
