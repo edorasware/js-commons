@@ -1,16 +1,13 @@
 var _ = require('lodash');
 
-exports.isObject = _.partial(isOptionalValueOrFulfilsConstraint, _.isPlainObject, 'Object', undefined);
-
-exports.isArray = _.partial(isOptionalValueOrFulfilsConstraint, _.isArray, 'Array', undefined);
-
-exports.isString = _.partial(isOptionalValueOrFulfilsConstraint, _.isString, 'String', undefined);
-
-exports.isFunction = _.partial(isOptionalValueOrFulfilsConstraint, _.isFunction, 'Function', undefined);
-
-exports.isNumber = _.partial(isOptionalValueOrFulfilsConstraint, _.isNumber, 'Number', undefined);
-
-exports.isNotObject = _.partial(isOptionalValueOrFulfilsConstraint, not(_.isPlainObject), undefined, 'The argument should not be of type Object.');
+module.exports = {
+    isObject: _.partial(isOptionalValueOrFulfilsConstraint, _.isPlainObject, 'Object', undefined),
+    isArray: _.partial(isOptionalValueOrFulfilsConstraint, _.isArray, 'Array', undefined),
+    isString: _.partial(isOptionalValueOrFulfilsConstraint, _.isString, 'String', undefined),
+    isFunction: _.partial(isOptionalValueOrFulfilsConstraint, _.isFunction, 'Function', undefined),
+    isNumber: _.partial(isOptionalValueOrFulfilsConstraint, _.isNumber, 'Number', undefined),
+    isNotObject: _.partial(isOptionalValueOrFulfilsConstraint, not(_.isPlainObject), undefined, 'The argument should not be of type Object.')
+};
 
 function not(fn) {
     return function () {

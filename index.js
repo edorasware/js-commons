@@ -1,1 +1,3 @@
-require('./src/assert');
+module.exports = {
+    assert: require('./src/assert')
+};
