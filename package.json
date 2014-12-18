@@ -16,13 +16,16 @@
   },
   "homepage": "https://github.com/rohanware/js-commons",
   "devDependencies": {
-    "jasmine-core": "^2.1.3",
+    "js-test-commons": "^0.0.10",
     "karma": "^0.12.28",
     "karma-browserify": "^1.0.0",
-    "karma-jasmine": "^0.3.2",
+    "karma-jasmine": "^0.1.5",
     "karma-phantomjs-launcher": "^0.1.4"
   },
   "dependencies": {
     "lodash": "^2.4.1"
+  },
+  "browser": {
+    "polyfills": "./src/polyfills.js"
   }
 }

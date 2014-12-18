@@ -4,11 +4,11 @@ describe('assert', function () {
     describe('isObject method', function () {
 
         it('should throw an exception when value is not an object', function () {
-            _.forEach([undefined, null, 0, 0.5, 'text', true, [], _.noop], function (value) {
+            testWithAllValuesBut('object', function (value) {
                 expect(function () {
                     assert.isObject(value);
-                }).toThrowError('The argument should be of type Object but it is of type: "' + typeof value + '".');
-            });
+                }).toThrowContaining('Object', typeof value);
+            })
         });
 
         it('should not throw an exception when value is an object', function () {
@@ -22,7 +22,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isObject(undefined, false, 'custom error message');
-            }).toThrowError('custom error message');
+            }).toThrow('custom error message');
         });
 
     });
@@ -30,10 +30,10 @@ describe('assert', function () {
     describe('isArray method', function () {
 
         it('should throw an exception when is not an array', function () {
-            _.forEach([undefined, null, 0, 0.5, 'text', true, {}, _.noop], function (value) {
+            testWithAllValuesBut('array', function (value) {
                 expect(function () {
                     assert.isArray(value);
-                }).toThrowError('The argument should be of type Array but it is of type: "' + typeof value + '".');
+                }).toThrowContaining('Array', typeof value);
             });
         });
 
@@ -48,7 +48,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isArray(undefined, false, 'custom error message');
-            }).toThrowError('custom error message');
+            }).toThrow('custom error message');
         });
 
     });
@@ -56,10 +56,10 @@ describe('assert', function () {
     describe('isString method', function () {
 
         it('should throw an exception when is not a string', function () {
-            _.forEach([undefined, null, 0, 0.5, [], true, {}, _.noop], function (value) {
+            testWithAllValuesBut('string', function (value) {
                 expect(function () {
                     assert.isString(value);
-                }).toThrowError('The argument should be of type String but it is of type: "' + typeof value + '".');
+                }).toThrowContaining('String', typeof value);
             });
         });
 
@@ -74,7 +74,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isString(undefined, false, 'custom error message');
-            }).toThrowError('custom error message');
+            }).toThrow('custom error message');
         });
 
     });
@@ -82,10 +82,10 @@ describe('assert', function () {
     describe('isFunction method', function () {
 
         it('should throw an exception when is not a function', function () {
-            _.forEach([undefined, null, 0, 0.5, [], true, {}, 'text'], function (value) {
+            testWithAllValuesBut('function', function (value) {
                 expect(function () {
                     assert.isFunction(value);
-                }).toThrowError('The argument should be of type Function but it is of type: "' + typeof value + '".');
+                }).toThrowContaining('Function', typeof value);
             });
         });
 
@@ -100,7 +100,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isFunction(undefined, false, 'custom error message');
-            }).toThrowError('custom error message');
+            }).toThrow('custom error message');
         });
 
     });
@@ -108,17 +108,13 @@ describe('assert', function () {
     describe('isNotObject method', function () {
 
         it('should throw an exception when value is not an object', function () {
-            _.forEach([
-                {}
-            ], function (value) {
-                expect(function () {
-                    assert.isNotObject(value);
-                }).toThrowError('The argument should not be of type Object.');
-            });
+            expect(function () {
+                assert.isNotObject({});
+            }).toThrow('The argument should not be of type Object.');
         });
 
-        it('should not throw an exception when value is an object', function () {
-            _.forEach([undefined, null, 0, 0.5, 'text', true, [], _.noop], function (value) {
+        it('should not throw an exception when value is not an object', function () {
+            testWithAllValuesBut(['object'], function (value) {
                 expect(function () {
                     assert.isNotObject(value);
                 }).not.toThrow();
@@ -132,7 +128,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isNotObject({}, false, 'custom error message');
-            }).toThrowError('custom error message');
+            }).toThrow('custom error message');
         });
 
     });
@@ -140,10 +136,10 @@ describe('assert', function () {
     describe('isNumber method', function () {
 
         it('should throw an exception when value is not a number', function () {
-            _.forEach([undefined, null, {}, 'text', true, [], _.noop], function (value) {
+            testWithAllValuesBut('number', function (value) {
                 expect(function () {
                     assert.isNumber(value);
-                }).toThrowError('The argument should be of type Number but it is of type: "' + typeof value + '".');
+                }).toThrowContaining('Number', typeof value);
             });
         });
 
@@ -160,8 +156,9 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isNumber(undefined, false, 'custom error message');
-            }).toThrowError('custom error message');
+            }).toThrow('custom error message');
         });
 
     });
-});
+})
+;
