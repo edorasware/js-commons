@@ -1,3 +1,4 @@
 module.exports = {
-    assert: require('./src/assert')
+    assert: require('./src/assert'),
+    urlBuilder: require('./src/url-builder')
 };
