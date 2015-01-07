@@ -79,6 +79,32 @@ describe('assert', function () {
 
     });
 
+    describe('isBoolean method', function () {
+
+        it('should throw an exception when is not a boolean', function () {
+            testWithAllValuesBut('boolean', function (value) {
+                expect(function () {
+                    assert.isBoolean(value);
+                }).toThrowContaining('Boolean', typeof value);
+            });
+        });
+
+        it('should not throw an exception when value is a boolean', function () {
+            assert.isBoolean(true);
+        });
+
+        it('should not throw an exception when value is undefined and optional is true', function () {
+            assert.isBoolean(undefined, true);
+        });
+
+        it('should throw an exception with a custom message', function () {
+            expect(function () {
+                assert.isBoolean(undefined, false, 'custom error message');
+            }).toThrow('custom error message');
+        });
+
+    });
+
     describe('isFunction method', function () {
 
         it('should throw an exception when is not a function', function () {
