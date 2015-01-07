@@ -1,6 +1,6 @@
 {
   "name": "js-commons",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Reusable JS abstractions",
   "main": "index.js",
   "scripts": {
@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rohanware/js-commons.git"
+    "url": "https://github.com/edorasware/js-commons.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rohanware/js-commons/issues"
+    "url": "https://github.com/edorasware/js-commons/issues"
   },
-  "homepage": "https://github.com/rohanware/js-commons",
+  "homepage": "https://github.com/edorasware/js-commons",
   "devDependencies": {
     "js-test-commons": "^0.0.10",
     "karma": "^0.12.28",
