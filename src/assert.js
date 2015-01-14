@@ -7,7 +7,8 @@ module.exports = {
     isBoolean: _.partial(isOptionalValueOrFulfilsConstraint, _.isBoolean, 'Boolean', undefined),
     isFunction: _.partial(isOptionalValueOrFulfilsConstraint, _.isFunction, 'Function', undefined),
     isNumber: _.partial(isOptionalValueOrFulfilsConstraint, _.isNumber, 'Number', undefined),
-    isNotObject: _.partial(isOptionalValueOrFulfilsConstraint, not(_.isPlainObject), undefined, 'The argument should not be of type Object.')
+    isNotObject: _.partial(isOptionalValueOrFulfilsConstraint, not(_.isPlainObject), undefined, 'The argument should not be of type Object.'),
+    isDefinedOrNotNull: isDefinedOrNotNull
 };
 
 function not(fn) {
@@ -20,5 +21,11 @@ function isOptionalValueOrFulfilsConstraint(constraint, typeName, defaultErrorMe
     if ((optional !== true || !_.isUndefined(value)) && !constraint(value)) {
         errorMessage = errorMessage || defaultErrorMessage || 'The argument should be of type ' + typeName + ' but it is of type: "' + typeof value + '".';
         throw new Error(errorMessage);
+    }
+}
+
+function isDefinedOrNotNull (value, errorMessage) {
+    if(_.isUndefined(value) || _.isNull(value)){
+        throw new Error(errorMessage || 'The argument should not be undefined or null.');
     }
 }

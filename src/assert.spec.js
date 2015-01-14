@@ -186,5 +186,36 @@ describe('assert', function () {
         });
 
     });
-})
-;
+
+    describe('isDefinedOrNotNull method', function () {
+
+        it('should not throw an exception when value is defined', function () {
+            testWithAllValuesBut(['undefined', 'null'], function (value) {
+                expect(function () {
+                    assert.isDefinedOrNotNull(value);
+                }).not.toThrow();
+            });
+        });
+
+        it('should throw an exception when value is undefined or null', function () {
+            expect(function () {
+                assert.isDefinedOrNotNull(undefined);
+            }).toThrow('The argument should not be undefined or null.');
+
+            expect(function () {
+                assert.isDefinedOrNotNull(null);
+            }).toThrow('The argument should not be undefined or null.');
+        });
+
+        it('should throw an exception with a custom message', function () {
+            expect(function () {
+                assert.isDefinedOrNotNull(undefined, 'custom error message');
+            }).toThrow('custom error message');
+
+            expect(function () {
+                assert.isDefinedOrNotNull(null, 'custom error message');
+            }).toThrow('custom error message');
+        });
+
+    });
+});
