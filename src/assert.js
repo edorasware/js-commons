@@ -8,7 +8,8 @@ module.exports = {
     isFunction: _.partial(isOptionalValueOrFulfilsConstraint, _.isFunction, 'Function', undefined),
     isNumber: _.partial(isOptionalValueOrFulfilsConstraint, _.isNumber, 'Number', undefined),
     isNotObject: _.partial(isOptionalValueOrFulfilsConstraint, not(_.isPlainObject), undefined, 'The argument should not be of type Object.'),
-    isDefinedOrNotNull: isDefinedOrNotNull
+    isDefinedOrNotNull: isDefinedOrNotNull,
+    isNonEmptyString: _.partial(isOptionalValueOrFulfilsConstraint, isNonEmptyString, undefined, 'The argument should be a non empty String.')
 };
 
 function not(fn) {
@@ -28,4 +29,8 @@ function isDefinedOrNotNull (value, errorMessage) {
     if(_.isUndefined(value) || _.isNull(value)){
         throw new Error(errorMessage || 'The argument should not be undefined or null.');
     }
+}
+
+function isNonEmptyString(value){
+    return _.isString(value) && !_.isEmpty(value);
 }

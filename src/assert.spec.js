@@ -218,4 +218,58 @@ describe('assert', function () {
         });
 
     });
+
+    describe('isNonEmptyString method', function () {
+
+        it('should not throw an exception when value is an non-empty string', function () {
+            _.forEach(['f', 'bar', ' . '], function (value) {
+                expect(function () {
+                    assert.isNonEmptyString(value);
+                }).not.toThrow();
+            });
+        });
+
+        it('should throw an exception when value is not a string or an empty string', function () {
+            testWithAllValuesBut('string', function (value) {
+                expect(function () {
+                    assert.isNonEmptyString(value);
+                }).toThrow('The argument should be a non empty String.');
+            });
+
+            expect(function () {
+                assert.isNonEmptyString('');
+            }).toThrow('The argument should be a non empty String.');
+        });
+
+        it('should throw an exception when value is defined and not a string and optional is true', function () {
+            testWithAllValuesBut(['string', 'undefined'], function (value) {
+                expect(function () {
+                    assert.isNonEmptyString(value, true);
+                }).toThrow();
+            });
+        });
+
+        it('should throw an exception when value is an empty string and optional is true', function () {
+            expect(function () {
+                assert.isNonEmptyString('', true);
+            }).toThrow();
+        });
+
+        it('should not throw an exception when value is undefined and optional is true', function () {
+            expect(function () {
+                assert.isNonEmptyString(undefined, true);
+            }).not.toThrow();
+        });
+
+        it('should throw an exception with a custom message', function () {
+            expect(function () {
+                assert.isNonEmptyString('', false, 'custom error message');
+            }).toThrow('custom error message');
+
+            expect(function () {
+                assert.isNonEmptyString(undefined, false, 'custom error message');
+            }).toThrow('custom error message');
+        });
+
+    });
 });
