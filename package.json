@@ -1,6 +1,6 @@
 {
   "name": "js-commons",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Reusable JS abstractions",
   "main": "index.js",
   "scripts": {
