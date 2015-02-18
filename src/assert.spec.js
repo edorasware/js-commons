@@ -188,7 +188,6 @@ describe('assert', function () {
     });
 
     describe('isDefinedOrNotNull method', function () {
-
         it('should not throw an exception when value is defined', function () {
             testWithAllValuesBut(['undefined', 'null'], function (value) {
                 expect(function () {
@@ -216,7 +215,31 @@ describe('assert', function () {
                 assert.isDefinedOrNotNull(null, 'custom error message');
             }).toThrow('custom error message');
         });
+    });
 
+    describe('isUndefinedOrNull', function () {
+        it('should not throw an exception when value is undefined or null', function () {
+            expect(function () {
+                assert.isUndefinedOrNull(undefined);
+                assert.isUndefinedOrNull(null);
+            }).not.toThrow();
+        });
+
+        it('should throw an exception when value is not undefined', function () {
+            testWithAllValuesBut(['undefined', 'null'], function (value) {
+                expect(function(){
+                    assert.isUndefinedOrNull(value);
+                }).toThrow('The argument should be undefined or null.');
+            });
+        });
+
+        it('should throw an exception whit a custom message', function () {
+            testWithAllValuesBut(['undefined', 'null'], function (value) {
+                expect(function(){
+                    assert.isUndefinedOrNull(value, 'custom message');
+                }).toThrow('custom message');
+            });
+        });
     });
 
     describe('isNonEmptyString method', function () {
