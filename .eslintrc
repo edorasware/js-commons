@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": 1,
+    "jasmine": 1
+  },
+  "globals": {
+    "module": 1,
+    "require": 1
+  },
+  "rules": {
+    "quotes": [
+      1,
+      "single"
+    ],
+    "eqeqeq": 0,
+    "strict": 0,
+    "no-use-before-define": [
+      2,
+      "nofunc"
+    ],
+    "no-shadow": 0
+  }
+}
