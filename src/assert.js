@@ -1,13 +1,13 @@
 var _ = require('lodash');
 
 module.exports = {
-    isObject: _.partial(isOptionalValueOrFulfilsConstraint, _.isPlainObject, 'Object', undefined),
+    isObject: _.partial(isOptionalValueOrFulfilsConstraint, isObject, 'Object', undefined),
     isArray: _.partial(isOptionalValueOrFulfilsConstraint, _.isArray, 'Array', undefined),
     isString: _.partial(isOptionalValueOrFulfilsConstraint, _.isString, 'String', undefined),
     isBoolean: _.partial(isOptionalValueOrFulfilsConstraint, _.isBoolean, 'Boolean', undefined),
     isFunction: _.partial(isOptionalValueOrFulfilsConstraint, _.isFunction, 'Function', undefined),
     isNumber: _.partial(isOptionalValueOrFulfilsConstraint, _.isNumber, 'Number', undefined),
-    isNotObject: _.partial(isOptionalValueOrFulfilsConstraint, not(_.isPlainObject), undefined, 'The argument should not be of type Object.'),
+    isNotObject: _.partial(isOptionalValueOrFulfilsConstraint, not(isObject), undefined, 'The argument should not be of type Object.'),
     isNonEmptyString: _.partial(isOptionalValueOrFulfilsConstraint, isNonEmptyString, undefined, 'The argument should be a non empty String.'),
     isDefinedOrNotNull: _.partial(fulfilsConstraint, not(isUndefinedOrNull), 'The argument should not be undefined or null.'),
     isUndefinedOrNull: _.partial(fulfilsConstraint, isUndefinedOrNull, 'The argument should be undefined or null.')
@@ -30,6 +30,10 @@ function fulfilsConstraint(constraint, defaultErrorMessage, value, errorMessage)
     if(!constraint(value)){
         throw new Error(errorMessage || defaultErrorMessage);
     }
+}
+
+function isObject(value) {
+    return _.isObject(value) && !(_.isArray(value) || _.isFunction(value));
 }
 
 function isUndefinedOrNull(value) {

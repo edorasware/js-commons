@@ -12,7 +12,10 @@ describe('assert', function () {
         });
 
         it('should not throw an exception when value is an object', function () {
+            var testObject = new _.noop();
+
             assert.isObject({});
+            assert.isObject(testObject);
         });
 
         it('should not throw an exception when value is undefined and optional is true', function () {
