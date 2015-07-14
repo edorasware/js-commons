@@ -23,7 +23,7 @@
     "karma-phantomjs-launcher": "^0.1.4"
   },
   "dependencies": {
-    "lodash": "^2.4.1"
+    "lodash": "^3.5.0"
   },
   "browser": {
     "polyfills": "./src/polyfills.js"
