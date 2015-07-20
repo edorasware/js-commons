@@ -25,7 +25,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isObject(undefined, false, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
         });
 
     });
@@ -51,7 +51,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isArray(undefined, false, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
         });
 
     });
@@ -77,7 +77,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isString(undefined, false, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
         });
 
     });
@@ -103,7 +103,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isBoolean(undefined, false, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
         });
 
     });
@@ -129,7 +129,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isFunction(undefined, false, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
         });
 
     });
@@ -139,7 +139,7 @@ describe('assert', function () {
         it('should throw an exception when value is not an object', function () {
             expect(function () {
                 assert.isNotObject({});
-            }).toThrow('The argument should not be of type Object.');
+            }).toThrow(new Error('The argument should not be of type Object.'));
         });
 
         it('should not throw an exception when value is not an object', function () {
@@ -157,7 +157,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isNotObject({}, false, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
         });
 
     });
@@ -185,7 +185,7 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isNumber(undefined, false, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
         });
 
     });
@@ -202,21 +202,21 @@ describe('assert', function () {
         it('should throw an exception when value is undefined or null', function () {
             expect(function () {
                 assert.isDefinedOrNotNull(undefined);
-            }).toThrow('The argument should not be undefined or null.');
+            }).toThrow(new Error('The argument should not be undefined or null.'));
 
             expect(function () {
                 assert.isDefinedOrNotNull(null);
-            }).toThrow('The argument should not be undefined or null.');
+            }).toThrow(new Error('The argument should not be undefined or null.'));
         });
 
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isDefinedOrNotNull(undefined, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
 
             expect(function () {
                 assert.isDefinedOrNotNull(null, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
         });
     });
 
@@ -232,7 +232,7 @@ describe('assert', function () {
             testWithAllValuesBut(['undefined', 'null'], function (value) {
                 expect(function(){
                     assert.isUndefinedOrNull(value);
-                }).toThrow('The argument should be undefined or null.');
+                }).toThrow(new Error('The argument should be undefined or null.'));
             });
         });
 
@@ -240,7 +240,7 @@ describe('assert', function () {
             testWithAllValuesBut(['undefined', 'null'], function (value) {
                 expect(function(){
                     assert.isUndefinedOrNull(value, 'custom message');
-                }).toThrow('custom message');
+                }).toThrow(new Error('custom message'));
             });
         });
     });
@@ -259,12 +259,12 @@ describe('assert', function () {
             testWithAllValuesBut('string', function (value) {
                 expect(function () {
                     assert.isNonEmptyString(value);
-                }).toThrow('The argument should be a non empty String.');
+                }).toThrow(new Error('The argument should be a non empty String.'));
             });
 
             expect(function () {
                 assert.isNonEmptyString('');
-            }).toThrow('The argument should be a non empty String.');
+            }).toThrow(new Error('The argument should be a non empty String.'));
         });
 
         it('should throw an exception when value is defined and not a string and optional is true', function () {
@@ -290,11 +290,11 @@ describe('assert', function () {
         it('should throw an exception with a custom message', function () {
             expect(function () {
                 assert.isNonEmptyString('', false, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
 
             expect(function () {
                 assert.isNonEmptyString(undefined, false, 'custom error message');
-            }).toThrow('custom error message');
+            }).toThrow(new Error('custom error message'));
         });
 
     });

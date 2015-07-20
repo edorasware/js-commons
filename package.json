@@ -16,10 +16,10 @@
   },
   "homepage": "https://github.com/edorasware/js-commons",
   "devDependencies": {
-    "js-test-commons": "^0.0.10",
-    "karma": "^0.12.28",
+    "js-test-commons": "^0.1.0",
+    "karma": "^0.12.37",
     "karma-browserify": "^1.0.0",
-    "karma-jasmine": "^0.1.5",
+    "karma-jasmine": "^0.2.3",
     "karma-phantomjs-launcher": "^0.1.4"
   },
   "dependencies": {
