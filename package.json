@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Reusable JS abstractions",
   "scripts": {
-    "test": "node node_modules/karma/bin/karma start --singleRun"
+    "test": "node node_modules/karma/bin/karma start --singleRun",
+    "dev": "node node_modules/karma/bin/karma start"
   },
   "repository": {
     "type": "git",
