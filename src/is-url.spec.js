@@ -36,9 +36,9 @@ describe('isUrl', function () {
             'http://उदाहरण.परीक्षा',
             'http://1337.net',
             'http://a.b-c.de',
-            'http://127.0.0.1',
             'http://192.128.0.1',
-            'http://223.255.255.254'
+            'http://223.255.255.254',
+            'http://www.foo.bar./'
         ],
         shouldNotMatch = [
             'http://',
@@ -75,7 +75,6 @@ describe('isUrl', function () {
             'http://123.123.123',
             'http://3628126748',
             'http://.www.foo.bar/',
-            'http://www.foo.bar./',
             'http://.www.foo.bar./',
             'foo',
             'foo-bar',
