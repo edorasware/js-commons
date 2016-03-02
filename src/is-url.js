@@ -1,6 +1,6 @@
-module.exports = function (urlCandidate) {
+module.exports = function (urlCandidate, includeLocalAdressesAndRootUrls) {
     //gracefully taken from https://gist.github.com/dperini/729294 - MIT license
-    var isUrlMatcher = new RegExp(
+    var isPublicUrlMatcher = new RegExp(
         "^" +
             // protocol identifier
         "(?:(?:https?|ftp)://)" +
@@ -37,5 +37,38 @@ module.exports = function (urlCandidate) {
         "$", "i"
     );
 
-    return isUrlMatcher.test(urlCandidate);
+    var isLocalAddressOrRootUrlMatcher = new RegExp(
+        "^" +
+        "(?:" +
+            // protocol identifier
+        "(?:(?:https?|ftp)://)" +
+            // user:pass authentication
+        "(?:\\S+(?::\\S*)?@)?" +
+            // host name
+        "(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)" +
+            // domain name
+        "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*" +
+            // TLD identifier
+        "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))?" +
+            // TLD may end with dot
+        "\\.?" +
+            // port number
+        "(?::\\d{2,5})?" +
+        ")?" +
+            // resource path
+        "(?:[/#]\\S*)?" +
+        "$", "i"
+    );
+
+    var isValidUrl = false;
+
+    if (includeLocalAdressesAndRootUrls) {
+        isValidUrl = isLocalAddressOrRootUrlMatcher.test(urlCandidate);
+    }
+
+    if (!isValidUrl) {
+        isValidUrl = isPublicUrlMatcher.test(urlCandidate);
+    }
+
+    return isValidUrl;
 };

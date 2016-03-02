@@ -1,7 +1,7 @@
 describe('isUrl', function () {
     var isUrl = require('./is-url'), _ = require('lodash');
 
-    var shouldMatch = [
+    var excludeNonPublicAndRootUrlsShouldMatch = [
             'http://foo.com/blah_blah',
             'http://foo.com/blah_blah/',
             'http://foo.com/blah_blah_(foo)',
@@ -40,7 +40,7 @@ describe('isUrl', function () {
             'http://223.255.255.254',
             'http://www.foo.bar./'
         ],
-        shouldNotMatch = [
+        excludeNonPublicAndRootUrlsShouldNotMatch = [
             'http://',
             'http://.',
             'http://..',
@@ -79,19 +79,46 @@ describe('isUrl', function () {
             'foo',
             'foo-bar',
             'http://localhost'
+        ],
+        nonPublicAndRootUrlsShouldMatch = [
+            '/rest/foo/bar',
+            '/rest/foo/bar/',
+            'http://localhost',
+            'http://localhost/',
+            'http://localhost/rest/foo/bar',
+            'http://localhost/rest/foo/bar/',
+            'http://localhost:3000',
+            'http://localhost:3000/',
+            'http://localhost:3000/rest/foo/bar',
+            'http://localhost:3000/rest/foo/bar/'
+        ];
+        nonPublicAndRootUrlsShouldNotMatch = [
+            'localhost',
+            'http://:3000/rest/foo/bar',
+            'http://:3000',
+            ':3000'
         ];
 
-    describe('valid Urls', function () {
-        generateTests(shouldMatch, true);
-    });
-    describe('invalid Urls', function () {
-        generateTests(shouldNotMatch, false);
+    describe('exclude non-public addresses and root valid urls', function () {
+        generateTests(excludeNonPublicAndRootUrlsShouldMatch, false, true);
     });
 
-    function generateTests(fixtures, expectedResult) {
+    describe('exclude non-public addresses and root invalid urls', function () {
+        generateTests(excludeNonPublicAndRootUrlsShouldNotMatch, false, false);
+    });
+
+    describe('include non-public addresses and root valid urls', function () {
+        generateTests(nonPublicAndRootUrlsShouldMatch, true, true);
+    });
+
+    describe('include non-public addresses and root invalid urls', function () {
+        generateTests(nonPublicAndRootUrlsShouldNotMatch, true, false);
+    });
+
+    function generateTests(fixtures, includeLocalAddresesAndRootUrls, expectedResult) {
         _.forEach(fixtures, function (fixture) {
             it(fixture, function () {
-                expect(isUrl(fixture)).toBe(expectedResult);
+                expect(isUrl(fixture, includeLocalAddresesAndRootUrls)).toBe(expectedResult);
             });
         });
     }
