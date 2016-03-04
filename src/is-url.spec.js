@@ -91,7 +91,7 @@ describe('isUrl', function () {
             'http://localhost:3000/',
             'http://localhost:3000/rest/foo/bar',
             'http://localhost:3000/rest/foo/bar/'
-        ];
+        ],
         nonPublicAndRootUrlsShouldNotMatch = [
             'localhost',
             'http://:3000/rest/foo/bar',
