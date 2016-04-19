@@ -22,6 +22,11 @@ describe('urlBuilder', function () {
 
         it('should return the same URL when a URL is provided with encoded parameter values', function () {
             expect(urlBuilder(testUrl).build()).toEqual(baseUrl + '?x=' + encodeURIComponent(testParameterValue) + '#hash');
+            expect(urlBuilder(testUrl).build(true)).toEqual(baseUrl + '?x=' + encodeURIComponent(testParameterValue) + '#hash');
+        });
+
+        it('should return the same URL when a URL is provided with non-encoded parameter values', function () {
+            expect(urlBuilder(testUrl).build(false)).toEqual(testUrl);
         });
     });
 

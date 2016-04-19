@@ -19,24 +19,25 @@ module.exports = function (url) {
         return parseUrl(url);
     }
 
-    function build() {
-        var parameters = [];
+    function build(encodeParameterValues) {
+        var parameters = [],
+            parameterValueEncoder = encodeParameterValues === false ? _.identity : encodeURIComponent;
 
         _.forOwn(urlModel.parameters, function (parameterValue, parameterName) {
-            parameters.push(encodeParameter(parameterName, parameterValue));
+            parameters.push(buildParameter(parameterName, parameterValue, parameterValueEncoder));
         });
 
         urlModel.search = parameters.length > 0 ? '?' + parameters.join('&') : '';
 
         return urlModel.origin + urlModel.pathname + urlModel.search + urlModel.hash;
 
-        function encodeParameter(parameterName, parameterValue) {
+        function buildParameter(parameterName, parameterValue, parameterValueEncoder) {
             if (_.isArray(parameterValue)) {
-                parameterValue = parameterValue.map(encodeURIComponent).join('&' + parameterName + '=');
+                parameterValue = parameterValue.map(parameterValueEncoder).join('&' + parameterName + '=');
             } else if (_.isPlainObject(parameterValue)) {
-                parameterValue = encodeURIComponent(JSON.stringify(parameterValue));
+                parameterValue = parameterValueEncoder(JSON.stringify(parameterValue));
             } else {
-                parameterValue = encodeURIComponent(parameterValue);
+                parameterValue = parameterValueEncoder(parameterValue);
             }
 
             return parameterName + '=' + parameterValue;
