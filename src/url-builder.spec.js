@@ -1,5 +1,8 @@
 describe('urlBuilder', function () {
-    var urlBuilder = require('./url-builder'), baseUrl = 'http://user:pass@example.com:8080/directory/file.ext', testUrl = baseUrl + '?x=1#hash';
+    var urlBuilder = require('./url-builder'),
+        baseUrl = 'http://user:pass@example.com:8080/directory/file.ext',
+        testParameterValue = '{foo?}',
+        testUrl = baseUrl + '?x=' + testParameterValue + '#hash';
 
     describe('build', function () {
         it('should throw an exception when no URL is provided', function () {
@@ -17,8 +20,8 @@ describe('urlBuilder', function () {
             expect(urlBuilder('   ').build()).toEqual('');
         });
 
-        it('should return the same URL when a URL is provided', function () {
-            expect(urlBuilder(baseUrl).build()).toEqual(baseUrl);
+        it('should return the same URL when a URL is provided with encoded parameter values', function () {
+            expect(urlBuilder(testUrl).build()).toEqual(baseUrl + '?x=' + encodeURIComponent(testParameterValue) + '#hash');
         });
     });
 
@@ -49,7 +52,7 @@ describe('urlBuilder', function () {
     });
 
     describe('setParameter', function () {
-        it('should set the value of the parameter as simple value', function () {
+        it('should set the value of the parameter as simple value and encode it', function () {
             var builder = urlBuilder('').setParameter('a', '1');
 
             expect(builder.build()).toEqual('?a=1');
@@ -62,33 +65,39 @@ describe('urlBuilder', function () {
 
             expect(builder.build()).toEqual(baseUrl + '?a=2');
 
-            builder = urlBuilder(testUrl).setParameter('a', '1');
+            builder = urlBuilder(testUrl).setParameter('a', '{bar?}');
 
-            expect(builder.build()).toEqual(baseUrl + '?x=1&a=1#hash');
+            expect(builder.build()).toEqual(baseUrl +
+                '?x=' + encodeURIComponent(testParameterValue) +
+                '&a=' + encodeURIComponent('{bar?}') +
+                '#hash');
         });
 
-        it('should set the value of the parameter as array', function () {
-            var urlModel = urlBuilder(baseUrl).setParameter('q', ['1', '2', '3']);
+        it('should set the value of the parameter as array and encode the values', function () {
+            var urlModel = urlBuilder(baseUrl).setParameter('q', ['{foo?}', '{bar?}', 'baz']);
 
-            expect(urlModel.build()).toEqual(baseUrl + '?q=1&q=2&q=3');
+            expect(urlModel.build()).toEqual(baseUrl +
+                '?q=' + encodeURIComponent('{foo?}') +
+                '&q=' + encodeURIComponent('{bar?}') +
+                '&q=' + 'baz');
         });
     });
 
     describe('setParameters', function () {
-        it('should set all the parameters', function () {
-            var parameters = {a: '1', b: '2'};
+        it('should set all the parameters at once and encode the values', function () {
+            var parameters = {a: '{foo?}', b: 'bar'};
 
             var builder = urlBuilder('').setParameters(parameters);
 
-            expect(builder.build()).toEqual('?a=1&b=2');
+            expect(builder.build()).toEqual('?a=' + encodeURIComponent('{foo?}') + '&b=bar');
 
             builder = urlBuilder(baseUrl).setParameters(parameters);
 
-            expect(builder.build()).toEqual(baseUrl + '?a=1&b=2');
+            expect(builder.build()).toEqual(baseUrl + '?a=' + encodeURIComponent('{foo?}') + '&b=bar');
 
-            builder = urlBuilder(baseUrl).setParameters({c: '3', d: '4'});
+            builder = urlBuilder(baseUrl).setParameters({c: 'bar', d: '{baz?}'});
 
-            expect(builder.build()).toEqual(baseUrl + '?c=3&d=4');
+            expect(builder.build()).toEqual(baseUrl + '?c=bar&d=' + encodeURIComponent('{baz?}'));
         });
     });
 });

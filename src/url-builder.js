@@ -32,11 +32,13 @@ module.exports = function (url) {
 
         function encodeParameter(parameterName, parameterValue) {
             if (_.isArray(parameterValue)) {
-                parameterValue = parameterValue.join('&' + parameterName + '=');
-            }
-            if (_.isPlainObject(parameterValue)) {
+                parameterValue = parameterValue.map(encodeURIComponent).join('&' + parameterName + '=');
+            } else if (_.isPlainObject(parameterValue)) {
                 parameterValue = encodeURIComponent(JSON.stringify(parameterValue));
+            } else {
+                parameterValue = encodeURIComponent(parameterValue);
             }
+
             return parameterName + '=' + parameterValue;
         }
     }
