@@ -28,6 +28,10 @@ describe('urlBuilder', function () {
         it('should return the same URL when a URL is provided with non-encoded parameter values', function () {
             expect(urlBuilder(testUrl).build(false)).toEqual(testUrl);
         });
+
+        it('should return not encode certain characters in parameter values', function () {
+            expect(urlBuilder('/url?foo1={bar1?}&foo2=$: bar2').build()).toEqual('/url?foo1=%7Bbar1%3F%7D&foo2=$:%20bar2');
+        });
     });
 
     describe('getParameter', function () {

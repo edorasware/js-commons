@@ -21,7 +21,7 @@ module.exports = function (url) {
 
     function build(encodeParameterValues) {
         var parameters = [],
-            parameterValueEncoder = encodeParameterValues === false ? _.identity : encodeURIComponent;
+            parameterValueEncoder = encodeParameterValues === false ? _.identity : encodeUriSegment;
 
         _.forOwn(urlModel.parameters, function (parameterValue, parameterName) {
             parameters.push(buildParameter(parameterName, parameterValue, parameterValueEncoder));
@@ -119,6 +119,27 @@ module.exports = function (url) {
                     parameters[parameterName] = parameterValue;
                 }
             }
+        }
+    }
+
+    /*
+     Taken from AngularJS as it seems that the standard encodeURIComponent() function is too aggressive and
+     as per https://tools.ietf.org/html/rfc3986 some characters do not need to be encoded.
+     */
+    function encodeUriSegment(value) {
+        return encodeUriQuery(value, true).
+        replace(/%26/gi, '&').
+        replace(/%3D/gi, '=').
+        replace(/%2B/gi, '+');
+
+        function encodeUriQuery(value, pctEncodeSpaces) {
+            return encodeURIComponent(value).
+            replace(/%40/gi, '@').
+            replace(/%3A/gi, ':').
+            replace(/%24/g, '$').
+            replace(/%2C/gi, ',').
+            replace(/%3B/gi, ';').
+            replace(/%20/g, (pctEncodeSpaces ? '%20' : '+'));
         }
     }
 };
