@@ -1,6 +1,6 @@
 {
   "name": "js-commons",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Reusable JS abstractions",
   "scripts": {
     "test": "node node_modules/karma/bin/karma start --singleRun",
