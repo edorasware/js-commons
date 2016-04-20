@@ -121,18 +121,20 @@ module.exports = function (url) {
             }
         }
     }
-
-    /*
-     Taken from AngularJS as it seems that the standard encodeURIComponent() function is too aggressive and
-     as per https://tools.ietf.org/html/rfc3986 some characters do not need to be encoded.
-     */
-    function encodeUriParameterValue(value, encodeSpacesWithPercentage) {
-        return encodeURIComponent(value).
-        replace(/%40/gi, '@').
-        replace(/%3A/gi, ':').
-        replace(/%24/g, '$').
-        replace(/%2C/gi, ',').
-        replace(/%3B/gi, ';').
-        replace(/%20/g, (encodeSpacesWithPercentage === false ? '+' : '%20'));
-    }
 };
+
+/*
+ Taken from AngularJS as it seems that the standard encodeURIComponent() function is too aggressive and
+ as per https://tools.ietf.org/html/rfc3986 some characters do not need to be encoded.
+ */
+function encodeUriParameterValue(value) {
+    return encodeURIComponent(value).
+    replace(/%40/gi, '@').
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%3B/gi, ';').
+    replace(/%20/g, '+');
+}
+
+module.exports.encodeUriParameterValue = encodeUriParameterValue;

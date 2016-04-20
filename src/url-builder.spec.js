@@ -1,5 +1,6 @@
 describe('urlBuilder', function () {
     var urlBuilder = require('./url-builder'),
+        encodeUriParameterValue = require('./url-builder').encodeUriParameterValue,
         baseUrl = 'http://user:pass@example.com:8080/directory/file.ext',
         testParameterValue = '{foo? }',
         testUrl = baseUrl + '?x=' + testParameterValue + '#hash';
@@ -21,8 +22,8 @@ describe('urlBuilder', function () {
         });
 
         it('should return the same URL when a URL is provided with encoded parameter values', function () {
-            expect(urlBuilder(testUrl).build()).toEqual(baseUrl + '?x=' + encodeURIComponent(testParameterValue) + '#hash');
-            expect(urlBuilder(testUrl).build(true)).toEqual(baseUrl + '?x=' + encodeURIComponent(testParameterValue) + '#hash');
+            expect(urlBuilder(testUrl).build()).toEqual(baseUrl + '?x=' + encodeUriParameterValue(testParameterValue) + '#hash');
+            expect(urlBuilder(testUrl).build(true)).toEqual(baseUrl + '?x=' + encodeUriParameterValue(testParameterValue) + '#hash');
         });
 
         it('should return the same URL when a URL is provided with non-encoded parameter values', function () {
@@ -30,7 +31,7 @@ describe('urlBuilder', function () {
         });
 
         it('should return not encode certain characters in parameter values', function () {
-            expect(urlBuilder('/url?foo1={bar1?}&foo2=$: bar2').build()).toEqual('/url?foo1=%7Bbar1%3F%7D&foo2=$:%20bar2');
+            expect(urlBuilder('/url?foo1={bar1?}&foo2=$: bar2').build()).toEqual('/url?foo1=%7Bbar1%3F%7D&foo2=$:+bar2');
         });
     });
 
@@ -77,8 +78,8 @@ describe('urlBuilder', function () {
             builder = urlBuilder(testUrl).setParameter('a', '{bar?}');
 
             expect(builder.build()).toEqual(baseUrl +
-                '?x=' + encodeURIComponent(testParameterValue) +
-                '&a=' + encodeURIComponent('{bar?}') +
+                '?x=' + encodeUriParameterValue(testParameterValue) +
+                '&a=' + encodeUriParameterValue('{bar?}') +
                 '#hash');
         });
 
@@ -86,8 +87,8 @@ describe('urlBuilder', function () {
             var urlModel = urlBuilder(baseUrl).setParameter('q', ['{foo?}', '{bar?}', 'baz']);
 
             expect(urlModel.build()).toEqual(baseUrl +
-                '?q=' + encodeURIComponent('{foo?}') +
-                '&q=' + encodeURIComponent('{bar?}') +
+                '?q=' + encodeUriParameterValue('{foo?}') +
+                '&q=' + encodeUriParameterValue('{bar?}') +
                 '&q=' + 'baz');
         });
     });
@@ -98,15 +99,15 @@ describe('urlBuilder', function () {
 
             var builder = urlBuilder('').setParameters(parameters);
 
-            expect(builder.build()).toEqual('?a=' + encodeURIComponent('{foo?}') + '&b=bar');
+            expect(builder.build()).toEqual('?a=' + encodeUriParameterValue('{foo?}') + '&b=bar');
 
             builder = urlBuilder(baseUrl).setParameters(parameters);
 
-            expect(builder.build()).toEqual(baseUrl + '?a=' + encodeURIComponent('{foo?}') + '&b=bar');
+            expect(builder.build()).toEqual(baseUrl + '?a=' + encodeUriParameterValue('{foo?}') + '&b=bar');
 
             builder = urlBuilder(baseUrl).setParameters({c: 'bar', d: '{baz?}'});
 
-            expect(builder.build()).toEqual(baseUrl + '?c=bar&d=' + encodeURIComponent('{baz?}'));
+            expect(builder.build()).toEqual(baseUrl + '?c=bar&d=' + encodeUriParameterValue('{baz?}'));
         });
     });
 });
