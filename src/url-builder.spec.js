@@ -1,7 +1,7 @@
 describe('urlBuilder', function () {
     var urlBuilder = require('./url-builder'),
         baseUrl = 'http://user:pass@example.com:8080/directory/file.ext',
-        testParameterValue = '{foo?}',
+        testParameterValue = '{foo? }',
         testUrl = baseUrl + '?x=' + testParameterValue + '#hash';
 
     describe('build', function () {
