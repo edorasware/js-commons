@@ -83,6 +83,8 @@ describe('isUrl', function () {
         nonPublicAndRootUrlsShouldMatch = [
             '/rest/foo/bar',
             '/rest/foo/bar/',
+            './rest/foo/bar/',
+            '../rest/foo/bar/',
             'http://localhost',
             'http://localhost/',
             'http://localhost/rest/foo/bar',

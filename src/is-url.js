@@ -56,7 +56,7 @@ module.exports = function (urlCandidate, includeLocalAdressesAndRootUrls) {
         "(?::\\d{2,5})?" +
         ")?" +
             // resource path
-        "(?:[/#]\\S*)?" +
+        "(?:[/# | \./]\\S*)?" +
         "$", "i"
     );
 
