@@ -1,6 +1,6 @@
 {
   "name": "js-commons",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "Reusable JS abstractions",
   "engines": {
     "node": "<7.0.0"
